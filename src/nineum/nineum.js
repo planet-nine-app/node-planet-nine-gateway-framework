@@ -74,35 +74,22 @@ const yearSet = {
   year8: 'Year Eight',
 }
 
-function Nineum(universe, address, charge, direction, rarity, size, texture, shape, year, ordinal, hexString) {
-  this.universe = universe;
-  this.address = address;
-  this.charge = charge;
-  this.direction = direction;
-  this.rarity = rarity;
-  this.size = size;
-  this.texture = texture;
-  this.shape = shape;
-  this.year = year;
-  this.ordinal = ordinal;
-  this.hexString = hexString;
-}
-
-function Nineum(options) {
-  this.universe = options.universe;
-  this.address = options.address;
-  this.charge = options.charge;
-  this.direction = options.direction;
-  this.rarity = options.rarity;
-  this.size = options.size;
-  this.texture = options.texture;
-  this.shape = options.shape;
-  this.year = options.year;
-  this.ordinal = options.ordinal;
-  this.hexString = options.hexString;
-}
 
 module.exports = {
+  Nineum: function(options) {
+    this.universe = options.universe;
+    this.address = options.address;
+    this.charge = options.charge;
+    this.direction = options.direction;
+    this.rarity = options.rarity;
+    this.size = options.size;
+    this.texture = options.texture;
+    this.shape = options.shape;
+    this.year = options.year;
+    this.ordinal = options.ordinal;
+    this.hexString = options.hexString;
+  },
+
   getNineumArrayForNineumHexStrings: function (hexStrings) {
     if (!Array.isArray(hexStrings))
     {
@@ -135,7 +122,7 @@ module.exports = {
       ordinal: module.exports.getOrdinalFromHexString(hexString.slice(24, 32)),
     }
 
-    const nineum = new Nineum(nineumOptions);
+    const nineum = new module.exports.Nineum(nineumOptions);
 
     return nineum;
   },
