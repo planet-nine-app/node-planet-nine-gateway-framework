@@ -90,6 +90,10 @@ function Nineum(universe, address, charge, direction, rarity, size, texture, sha
 
 module.exports = {
   getNineumArrayForNineumHexStrings: function (hexStrings) {
+    if (!Array.isArray(hexStrings))
+    {
+      throw new TypeError(`Argument of getNineumArrayForNineumHexStrings() must be an array, not ${typeof hexStrings}`);
+    }
     let nineumArray = [];
     hexStrings.forEach(hexString => {
       let nineum = module.exports.getNineumFromHexString(hexString)
@@ -98,7 +102,11 @@ module.exports = {
     return nineumArray
   },
 
-  getNineumFromHexString: function (hexString) {
+  getNineumFromHexString: function (hexString) {   
+    if (typeof hexString !== 'string')
+    {
+      throw new TypeError(`Argument of getNineumFromHexString() must be a string, not ${typeof hexString}`);
+    }
     const universe = module.exports.getUniverseFromHexString(hexString.slice(0, 2))
     const address = module.exports.getAddressFromHexString(hexString.slice(2, 10))
     const charge = module.exports.getChargeFromHexString(hexString.slice(10, 12))
