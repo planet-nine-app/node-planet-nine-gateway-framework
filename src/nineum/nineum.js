@@ -88,6 +88,20 @@ function Nineum(universe, address, charge, direction, rarity, size, texture, sha
   this.hexString = hexString;
 }
 
+function Nineum(options) {
+  this.universe = options.universe;
+  this.address = options.address;
+  this.charge = options.charge;
+  this.direction = options.direction;
+  this.rarity = options.rarity;
+  this.size = options.size;
+  this.texture = options.texture;
+  this.shape = options.shape;
+  this.year = options.year;
+  this.ordinal = options.ordinal;
+  this.hexString = options.hexString;
+}
+
 module.exports = {
   getNineumArrayForNineumHexStrings: function (hexStrings) {
     if (!Array.isArray(hexStrings))
@@ -107,18 +121,21 @@ module.exports = {
     {
       throw new TypeError(`Argument of getNineumFromHexString() must be a string, not ${typeof hexString}`);
     }
-    const universe = module.exports.getUniverseFromHexString(hexString.slice(0, 2))
-    const address = module.exports.getAddressFromHexString(hexString.slice(2, 10))
-    const charge = module.exports.getChargeFromHexString(hexString.slice(10, 12))
-    const direction = module.exports.getDirectionFromHexString(hexString.slice(12, 14))
-    const rarity = module.exports.getRarityFromHexString(hexString.slice(14, 16))
-    const size = module.exports.getSizeFromHexString(hexString.slice(16, 18))
-    const texture = module.exports.getTextureFromHexString(hexString.slice(18, 20))
-    const shape = module.exports.getShapeFromHexString(hexString.slice(20, 22))
-    const year = module.exports.getYearFromHexString(hexString.slice(22, 24))
-    const ordinal = module.exports.getOrdinalFromHexString(hexString.slice(24, 32))
 
-    const nineum = new Nineum(universe, address, charge, direction, rarity, size, texture, shape, year, ordinal, hexString);
+    const nineumOptions = {
+      universe: module.exports.getUniverseFromHexString(hexString.slice(0, 2)),
+      address: module.exports.getAddressFromHexString(hexString.slice(2, 10)),
+      charge: module.exports.getChargeFromHexString(hexString.slice(10, 12)),
+      direction: module.exports.getDirectionFromHexString(hexString.slice(12, 14)),
+      rarity: module.exports.getRarityFromHexString(hexString.slice(14, 16)),
+      size: module.exports.getSizeFromHexString(hexString.slice(16, 18)),
+      texture: module.exports.getTextureFromHexString(hexString.slice(18, 20)),
+      shape: module.exports.getShapeFromHexString(hexString.slice(20, 22)),
+      year: module.exports.getYearFromHexString(hexString.slice(22, 24)),
+      ordinal: module.exports.getOrdinalFromHexString(hexString.slice(24, 32)),
+    }
+
+    const nineum = new Nineum(nineumOptions);
 
     return nineum;
   },
