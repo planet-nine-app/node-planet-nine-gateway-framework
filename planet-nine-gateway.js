@@ -2,15 +2,7 @@ const Nineum = require('./lib/models/nineum.js')
 const network = require('./lib/utilities/network.js')
 const OneTimeGateway = require('./lib/one-time-gateway.js')
 const OngoingGateway = require('./lib/ongoing-gateway.js')
-const crypto = require('planet-nine-crypto')
 const PlanetNineUser = require('./lib/planet-nine-user.js')
-
-const keys = crypto.generateKeys('asdf123456')
-
-crypto.getKeys = function() {
-  return keys
-}
-
 
 module.exports = class PlanetNineGateway {
 
