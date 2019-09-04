@@ -62,4 +62,14 @@ module.exports = class PlanetNineGateway {
     }
     this.ongoing.requestTransfer(opts, callback)
   }
+
+  static getNineumArrayForNineumHexStrings(hexStrings) {
+    const nineumArray = Nineum.getNineumArrayForNineumHexStrings(hexStrings)
+    return nineumArray
+  }
+  
+  static getNineumFromHexString(hexString) {
+    const nineum = Nineum.getNineumFromHexString(hexString)
+    return nineum
+  }
 }
