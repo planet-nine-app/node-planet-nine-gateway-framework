@@ -52,7 +52,14 @@ module.exports = class PlanetNineGateway {
     })
   }
 
-  getUser(opts, callback) {
+  getUser(userId, callback) {
+    if (!this.ongoing) {
+      return console.log(`Must initialize ongoingGateway before requestingTransfer`)
+    }
+    const opts = {
+      gatewayName: this.ongoing.gatewayName,
+      userId: userId,
+    }
     PlanetNineUser.getUser(opts, callback)
   }
 
