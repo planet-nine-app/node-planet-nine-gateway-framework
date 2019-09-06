@@ -86,7 +86,7 @@ If a user has authorized your ongoing gateway, you can retrieve their user objec
 
 ```javascript
 let userId = 157; //set to whatever your desired userId is
-gateway.getUser(157, (err, user) => {
+gateway.getUser(userId, (err, user) => {
   console.log('user', user)
 }) 
 ```
