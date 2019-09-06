@@ -92,6 +92,22 @@ gateway.getUser({userId: 40, gatewayName: 'npm-plugin-test-gateway4'}, (err, use
 
 This user object will have all the relevant user information including the user's Nineum. For an example of working with a user's Nineum check out this blogpost about making an inventory system (TODO: Link to inventory system blog post).
 
+Planet Nine user objects have the following structure: 
+
+```js
+user { userId: 157,
+  name: 'testuser12',
+  powerOrdinal: 1,
+  currentPower: 1000,
+  powerRegenerationRate: 1.6666984999999996,
+  globalRegenerationRate: 1.666667,
+  publicKey: '0367fab3d8b194f2557d75a20b2b5d7f181eaf82d6e2705b3012545efe1730b45c',
+  nineum:
+   [ '01000000010105010203030100000001',
+     '01000000010106090407070100000001',
+     '01000000010204030802020100000002' ] }
+```
+
 #### Spending Power
 
 You can make Power expenditures on behalf of users who have authorized your gateway. To do this you will need to call `usePowerAtOngoingGateway` like so:
