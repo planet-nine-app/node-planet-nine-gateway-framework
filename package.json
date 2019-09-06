@@ -1,0 +1,24 @@
+{
+  "name": "planet-nine-gateway-framework",
+  "version": "1.0.0",
+  "description": "Planet Nine gateway framework for Node.js apps",
+  "main": "planet-nine-gateway.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/planet-nine-app/node-planet-nine-gateway-framework.git"
+  },
+  "author": "John Klein",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/planet-nine-app/node-planet-nine-gateway-framework/issues"
+  },
+  "homepage": "https://github.com/planet-nine-app/node-planet-nine-gateway-framework#readme",
+  "dependencies": {
+    "moment": "^2.24.0",
+    "planet-nine-crypto": "^1.0.1",
+    "request": "^2.88.0"
+  }
+}
