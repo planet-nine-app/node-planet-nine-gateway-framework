@@ -25,12 +25,12 @@ gateway.ongoingGateway({gatewayName: gatewayName, publicKey: keys.publicKey})
 //   })
 // })  
 
-gateway.getUser({userId: 157, gatewayName: gatewayName}, (err, user) => {
+gateway.getUser(157, (err, user) => {
   if (err) console.log(err)
   console.log('user', user)
 }) 
 
-// gateway.getUser({userId: 157, gatewayName: gatewayName}, (err, user) => {
+// gateway.getUser(157, (err, user) => {
 //   if (err) {
 //     console.log(err)
 //   }
@@ -48,7 +48,7 @@ gateway.getUser({userId: 157, gatewayName: gatewayName}, (err, user) => {
 //   })
 // })
 
-// gateway.getUser({userId: 157, gatewayName: gatewayName}, (err, user) => {
+// gateway.getUser(157, (err, user) => {
 //   if (err) {
 //     console.log(err)
 //   }
