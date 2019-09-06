@@ -1,4 +1,4 @@
-const Nineum = require('./lib/models/nineum.js')
+const Nineum = require('./lib/nineum.js')
 const network = require('./lib/utilities/network.js')
 const OneTimeGateway = require('./lib/one-time-gateway.js')
 const OngoingGateway = require('./lib/ongoing-gateway.js')
