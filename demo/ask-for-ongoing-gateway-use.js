@@ -12,6 +12,7 @@ crypto.getKeys = function() {
 gateway.ongoingGateway({gatewayName: 'testGateway', publicKey: keys.publicKey})
 
 gateway.getUserIdByUsername('testuser12', (err, userId) => {
+  console.log(`asking for ongoing gateway authorization for user ${userId}`);
   if (err) return console.log(err)
   gateway.askForOngoingGatewayUsage(userId, (erro, user) => {
     if (erro) return console.log(erro)

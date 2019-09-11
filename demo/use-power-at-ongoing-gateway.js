@@ -1,4 +1,4 @@
-const PlanetNineGateway = require('./planet-nine-gateway.js')
+const PlanetNineGateway = require('../planet-nine-gateway')
 const crypto = require('planet-nine-crypto')
 
 let gateway = new PlanetNineGateway()
@@ -12,9 +12,7 @@ crypto.getKeys = function() {
 gateway.ongoingGateway({gatewayName: 'testGateway', publicKey: keys.publicKey})
 
 gateway.getUser(157, (err, user) => {
-  if (err) {
-    console.log(err)
-  }
+  if (err) return console.log(err)
   console.log('user before Power use', user)
   const usePowerOpts = {
     totalPower: 200,

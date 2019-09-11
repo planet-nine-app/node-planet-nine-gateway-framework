@@ -14,7 +14,7 @@ gateway.ongoingGateway({gatewayName: 'testGateway', publicKey: keys.publicKey})
 gateway.getUser({userId: 157, gatewayName: gatewayName}, (err, user) => {
   if (err) console.log(err)
   const requestTransferObj = {
-    user: user,
+    sourceUser: user,
     destinationUserId: 203,
     nineumUniqueIds: ['01000000010204030802020100000002'],
   }  
