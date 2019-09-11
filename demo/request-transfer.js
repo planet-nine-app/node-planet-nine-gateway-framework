@@ -1,4 +1,4 @@
-const PlanetNineGateway = require('planet-nine-gateway')
+const PlanetNineGateway = require('../planet-nine-gateway')
 const crypto = require('planet-nine-crypto')
 
 let gateway = new PlanetNineGateway()
@@ -11,8 +11,8 @@ crypto.getKeys = function() {
 
 gateway.ongoingGateway({gatewayName: 'testGateway', publicKey: keys.publicKey})
 
-gateway.getUser({userId: 157, gatewayName: gatewayName}, (err, user) => {
-  if (err) console.log(err)
+gateway.getUser(157, (err, user) => {
+  if (err) return console.log(err)
   const requestTransferObj = {
     user: user,
     destinationUserId: 203,
