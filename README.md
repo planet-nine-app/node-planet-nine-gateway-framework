@@ -136,7 +136,7 @@ Note: Returns an `Error: Authentication error` if the user has not authorized th
 
  | Property      | Description | Type  |
  | --------------|---------------| ------|
- | user      | User object retrieved from getUser() for the user from whom the Nineum will be transferred | Object |
+ | sourceUser    | User object retrieved from getUser() for the user from whom the Nineum will be transferred | Object |
  | destinationUserId      | User ID of the user who will receive the Nineum      |   Int |
   | nineumUniqueIds      | Array of Nineum unique IDs of the Nineum that will be transferred      |   Array\<String> |
 
