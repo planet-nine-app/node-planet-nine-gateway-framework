@@ -7,7 +7,7 @@ www.planetninekit.com is currently under construction. Until it is up and runnin
 
 * For the Planet Nine Gateway Node framework look no further than right here. Just scroll on down.
 
-* [Demo code for the Planet Nine Gateway Node framework](https://github.com/planet-nine-app/node-planet-nine-gateway-framework-demo)
+* [Demo code for the Planet Nine Gateway Node framework](https://github.com/planet-nine-app/node-planet-nine-gateway-framework-framework-demo)
 
 * [For the Planet Nine iOS Cocopod](https://github.com/planet-nine-app/iOS-PlanetNineGateway-Framework)
 
@@ -154,7 +154,7 @@ Note: Returns an `Error: Authentication error` if the user has not authorized th
 Install with [npm](http://npmjs.com) by running the following in the root directory of your node project:
 
 ```
-npm i planet-nine-gateway
+npm i planet-nine-gateway-framework
 ```
 
 ## Usage
@@ -184,7 +184,7 @@ An ongoing gateway is used when you want to utilize a user's information, typica
 Before using an ongoing gateway, you must first initialize it with a gateway name and a public key:
 
 ```javascript
-const PlanetNineGateway = require('planet-nine-gateway')
+const PlanetNineGateway = require('planet-nine-gateway-framework')
 const crypto = require('planet-nine-crypto')
 
 const keys = crypto.getKeys()
@@ -304,7 +304,7 @@ The Planet Nine Gateway framework includes some utility functions to help parse 
 Call `getNineumFromHexString` to parse a single Nineum hex string:
 
 ```js
-const PlanetNineGateway = require('planet-nine-gateway')
+const PlanetNineGateway = require('planet-nine-gateway-framework')
 
 const NineumHexString = '01000000010104090805070100000001'
 const nineum = PlanetNineGateway.getNineumFromHexString(NineumHexString)
@@ -314,7 +314,7 @@ console.log(nineum)
 Or call `getNineumArrayForNineumHexStrings` to parse an array of Nineum hex strings into an array of Nineum:
 
 ```js
-const PlanetNineGateway = require('planet-nine-gateway')
+const PlanetNineGateway = require('planet-nine-gateway-framework')
 
 const nineumHexStringArray = [
   '01000000010105010203030100000001',
