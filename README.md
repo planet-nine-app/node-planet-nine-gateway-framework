@@ -39,7 +39,7 @@ Initializes an ongoing gateway with options specified in the opts object.
 ### getUserIdByUsername
 
 ```js
-getUserIdByUsername(username, callback)
+planetNineGateway.getUserIdByUsername(username, callback)
 ```
 
 Looks up a user's user ID by username.
@@ -76,7 +76,7 @@ Prompts users to authorize the ongoing gateway.
 ### getUser
 
 ```js
-getUser(userId, callback)
+planetNineGateway.getUser(userId, callback)
 ```
 
 Gets the user object for the user with the specified user ID. 
@@ -123,7 +123,7 @@ Note: Returns an `Error: Authentication error` if the user has not authorized th
 ### requestTransfer
 
 ```js
-requestTransfer(opts, callback)
+planetNineGateway.requestTransfer(opts, callback)
 ```
 
 Initiates a Nineum transfer between users. Once the transfer has been initiated the source user must authorize the transfer
