@@ -1,4 +1,4 @@
-# node-planet-nine-gateway-framework
+# planet-nine-gateway
 A node framework for embedding gateways in your apps and interacting with the Planet Nine ecosystem. 
 
 ## Notice About planetninekit.com
@@ -12,6 +12,138 @@ www.planetninekit.com is currently under construction. Until it is up and runnin
 * [For the game demo The Ballad of Lorbert](https://github.com/planet-nine-app/theballadoflorbert)
 
 * [For the web](https://github.com/planet-nine-app/web-power-gateway) 
+
+## Quick Reference
+
+### ongoingGateway
+
+```js
+planetNineGateway.ongoingGateway(options)
+```
+
+Initializes an ongoing gateway with options specified in the opts object. 
+
+#### Parameters
+
+1. `opts`  
+
+ ongoingGateway() takes an options object with the following properties:
+
+ | Property      | Description | Type  |
+ | --------------|---------------| ------|
+ | gatewayName      | Name of the gateway | String |
+ | publicKey      | Public key for gateway      |   String |
+
+### getUserIdByUsername
+
+```js
+getUserIdByUsername(username, callback)
+```
+
+Looks up a user's user ID by username.
+
+#### Parameters
+
+1. `username`  
+	
+ The username of the user whose user ID you want to look up
+  
+2. `callback`
+
+ Callback function
+
+### askForOngoingGatewayUsage
+
+```js
+planetNineGateway.askForOngoingGatewayUsage(userId, callback)
+```
+
+Prompts users to authorize the ongoing gateway. 
+
+#### Parameters
+
+1. `userId`  
+	
+ User ID of the user whose authorization you are requesting
+ 
+2. `callback`
+
+ Callback function
+ 
+ 
+### getUser
+
+```js
+getUser(userId, callback)
+```
+
+Gets the user object for the user with the specified user ID. 
+
+Note: Returns an `Error: Authentication error` if the user has not authorized the gateway.
+
+#### Parameters
+
+1. `userId`  
+	
+ The user ID of the user whose you want to get
+  
+2. `callback`
+
+ Callback function
+
+### usePowerAtOngoingGateway
+
+```js
+planetNineGateway.usePowerAtOngoingGateway(options, callback)
+```
+
+Spends a user's Power at the gateway. 
+
+Note: Returns an `Error: Authentication error` if the user has not authorized the gateway.
+
+#### Parameters
+
+1. `options`  
+	
+ ongoingGateway() takes an options object with the following properties:
+
+ | Property      | Description | Type  |
+ | --------------|---------------| ------|
+ | totalPower      | Amount of Power user will spend at your gateway | Int |
+ | partnerName      | Name of account that will receive partner Nineum      |   String |
+  | user      | User object retrieved from getUser() for the user whose Power will be spent at the gateway      |   Object |
+
+ 
+2. `callback`
+
+ Callback function
+ 
+### requestTransfer
+
+```js
+requestTransfer(opts, callback)
+```
+
+Initiates a Nineum transfer between users. Once the transfer has been initiated the source user must authorize the transfer
+
+Note: Returns an `Error: Authentication error` if the user has not authorized the gateway.
+
+#### Parameters
+
+1. `options`  
+	
+ ongoingGateway() takes an options object with the following properties:
+
+ | Property      | Description | Type  |
+ | --------------|---------------| ------|
+ | user      | User object retrieved from getUser() for the user from whom the Nineum will be transferred | Object |
+ | destinationUserId      | User ID of the user who will receive the Nineum      |   Int |
+  | nineumUniqueIds      | Array of Nineum unique IDs of the Nineum that will be transferred      |   Array\<String> |
+
+ 
+2. `callback`
+
+ Callback function
 
 ## Getting Started
 
@@ -78,7 +210,7 @@ gateway.getUserIdByUsername('test-user', (err, userId) => {
 
 Invoking `askForOngoingGatewayUsage` will prompt the user to authorize your ongoing gateway in the Planet Nine app. It may be helpful to prompt the user to open the Planet Nine app on their mobile device. `askForOngoingGatewayUsage` will either return the user object if authorization is successful or it will return a `Ongoing gateway usage request expired` error if the request times out or is rejected. 
 
-Once a user has approved your ongoing gateway you can retrieve thier user object and make Power transactions and Nineum transfer request on their behalf.
+Once a user has approved your ongoing gateway you can retrieve their user object and make Power transactions and Nineum transfer request on their behalf.
 
 #### Getting users
 
