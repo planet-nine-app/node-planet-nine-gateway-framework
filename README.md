@@ -1,4 +1,4 @@
-# planet-nine-gateway
+# Planet Nine Gateway
 A node framework for embedding gateways in your apps and interacting with the Planet Nine ecosystem. 
 
 ## Notice About planetninekit.com
