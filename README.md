@@ -5,7 +5,9 @@ A node framework for embedding gateways in your apps and interacting with the Pl
 
 www.planetninekit.com is currently under construction. Until it is up and running here are some helpful links.
 
-* For the PlanetNineGateway Node framework look no further than right here. Just scroll on down.
+* For the Planet Nine Gateway Node framework look no further than right here. Just scroll on down.
+
+* [Demo code for the Planet Nine Gateway Node framework](https://github.com/planet-nine-app/node-planet-nine-gateway-framework-demo)
 
 * [For the Planet Nine iOS Cocopod](https://github.com/planet-nine-app/iOS-PlanetNineGateway-Framework)
 
