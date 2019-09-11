@@ -1,4 +1,4 @@
-const PlanetNineGateway = require('./planet-nine-gateway.js')
+const PlanetNineGateway = require('../planet-nine-gateway')
 const crypto = require('planet-nine-crypto')
 
 let gateway = new PlanetNineGateway()
