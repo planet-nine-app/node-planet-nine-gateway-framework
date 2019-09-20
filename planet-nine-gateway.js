@@ -3,8 +3,21 @@ const network = require('./lib/utilities/network.js')
 const OneTimeGateway = require('./lib/one-time-gateway.js')
 const OngoingGateway = require('./lib/ongoing-gateway.js')
 const PlanetNineUser = require('./lib/planet-nine-user.js')
+const crypto = require('planet-nine-crypto')
 
 module.exports = class PlanetNineGateway {
+
+  get keys() {
+    return crypto.getKeys()
+  }
+
+  set getKeys(getKeysFunc) {
+    crypto.getKeys = getKeysFunc
+  }
+
+  static generateKeys(seed) {
+    return crypto.generateKeys(seed)
+  }
 
   ongoingGateway(opts) {
     this.ongoing = new OngoingGateway(opts)
