@@ -39,6 +39,22 @@ module.exports = class PlanetNineGateway {
     this.ongoing.askForOngoingGatewayUsage(userId, callback)
   }
 
+  signinWithApple(gatewayName, appleId, callback) {
+    if (callback === undefined) {
+      return new Promise((resolve, reject) => {
+        this.signinWithApple(gatewayName, appleId, (err, result) => {
+          err ? reject(err) : resolve(result);
+        });
+      });
+    }
+
+    if(!this.ongoing) {
+      return callback(new Error('Must initialize ongoingGateway before asking for usage'));
+    } 
+
+    this.ongoing.signinWithApple(gatewayName, appleId, callback);
+  }
+
   usePowerAtOngoingGateway(opts, callback) {
     if (callback === undefined) {
       return new Promise((resolve, reject) => {
