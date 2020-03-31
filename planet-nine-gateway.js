@@ -125,6 +125,22 @@ module.exports = class PlanetNineGateway {
     this.ongoing.requestTransfer(opts, callback)
   }
 
+  mintNineum(opts, callback) {
+    if (callback === undefined) {
+      return new Promise((resolve, reject) => {
+        this.mintNineum(opts, (err, result) => {
+          err ? reject(err) : resolve(result)
+        });
+      });
+    }
+
+    if(!this.ongoing) {
+      return console.log('Must initialize ongoingGateway before mintNineum');
+    }
+
+    this.ongoing.mintNineum(opts, callback);
+  }
+
   static getNineumArrayForNineumHexStrings(hexStrings) {
     const nineumArray = Nineum.getNineumArrayForNineumHexStrings(hexStrings)
     return nineumArray
