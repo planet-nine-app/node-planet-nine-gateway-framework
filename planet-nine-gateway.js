@@ -125,6 +125,22 @@ module.exports = class PlanetNineGateway {
     this.ongoing.requestTransfer(opts, callback)
   }
 
+  registerToMintNineum(opts, callback) {
+    if (callback === undefined) {
+      return new Promise((resolve, reject) => {
+        this.registerToMintNineum(opts, (err, result) => {
+          err ? reject(err) : resolve(result)
+        });
+      });
+    }
+
+    if(!this.ongoing) {
+      return console.log('Must initialize ongoingGateway before mintNineum');
+    }
+
+    this.ongoing.registerToMintNineum(opts, callback);
+  }
+
   mintNineum(opts, callback) {
     if (callback === undefined) {
       return new Promise((resolve, reject) => {
