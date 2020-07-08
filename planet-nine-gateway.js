@@ -23,22 +23,6 @@ module.exports = class PlanetNineGateway {
     this.ongoing = new OngoingGateway(opts)
   }
 
-  healthcheck(callback) {
-    if (callback === undefined) {
-      return new Promise((resolve, reject) => {
-        this.askForOngoingGatewayUsage(userId, (err, result) => {
-          err ? reject(err) : resolve(result)
-        })
-      })
-    }
-    network.healthcheck((err, resp) => {
-      if (err) {
-        callback(err)
-      }
-      callback(null, resp)
-    }) 
-  }
-
   askForOngoingGatewayUsage(userId, callback) {
     if (callback === undefined) {
       return new Promise((resolve, reject) => {
