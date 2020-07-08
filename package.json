@@ -1,6 +1,10 @@
 {
   "name": "planet-nine-gateway-framework",
+<<<<<<< HEAD
   "version": "1.1.0",
+=======
+  "version": "1.2.0",
+>>>>>>> 4f41ab0283b9bd929d764e50e2e4e063945af583
   "description": "Planet Nine gateway framework for Node.js apps",
   "main": "planet-nine-gateway.js",
   "scripts": {
