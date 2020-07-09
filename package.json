@@ -17,8 +17,8 @@
   },
   "homepage": "https://github.com/planet-nine-app/node-planet-nine-gateway-framework#readme",
   "dependencies": {
+    "axios": "^0.19.2",
     "moment": "^2.24.0",
-    "planet-nine-crypto": "^1.0.1",
-    "request": "^2.88.0"
+    "planet-nine-crypto": "^1.0.1"
   }
 }
