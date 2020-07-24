@@ -5,6 +5,9 @@ const OngoingGateway = require('./lib/ongoing-gateway.js')
 const PlanetNineUser = require('./lib/planet-nine-user.js')
 const crypto = require('planet-nine-crypto')
 
+import { Buffer } from 'buffer'
+global.Buffer = Buffer
+
 module.exports = class PlanetNineGateway {
 
   get keys() {
@@ -21,6 +24,7 @@ module.exports = class PlanetNineGateway {
 
   ongoingGateway(opts) {
     this.ongoing = new OngoingGateway(opts)
+    return this.ongoing
   }
 
   askForOngoingGatewayUsage(userId, callback) {
@@ -55,6 +59,22 @@ module.exports = class PlanetNineGateway {
     this.ongoing.signinWithApple(gatewayName, appleId, callback);
   }
 
+  signInWithGoogle(googleIdToken, callback) {
+    if (callback === undefined) {
+      return new Promise((resolve, reject) => {
+        this.signInWithGoogle(googleIdToken, (err, result) => {
+          err ? reject(err) : resolve(result);
+        });
+      });
+    }
+
+    if(!this.ongoing) {
+      return callback(new Error('Must initialize ongoingGateway before asking for usage'));
+    } 
+
+    this.ongoing.signInWithGoogle(googleIdToken, callback);
+  }
+
   usePowerAtOngoingGateway(opts, callback) {
     if (callback === undefined) {
       return new Promise((resolve, reject) => {
@@ -84,7 +104,7 @@ module.exports = class PlanetNineGateway {
       if (err) {
         callback(err)
       }
-      const userId = user.userId
+      const userId = user.userUUID
       callback(null, userId)
     })
   }
