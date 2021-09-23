@@ -19,110 +19,96 @@ module.exports = class PlanetNineGateway {
     return crypto.generateKeys(seed)
   }
 
-  ongoingGateway(opts) {
-    this.ongoing = new OngoingGateway(opts)
+  static signMessage(message) {
+    return crypto.signMessage(message);
   }
 
-  askForOngoingGatewayUsage(userId, callback) {
-    if (callback === undefined) {
-      return new Promise((resolve, reject) => {
-        this.askForOngoingGatewayUsage(userId, (err, result) => {
-          err ? reject(err) : resolve(result)
-        })
-      })
-    }
-
-    if (!this.ongoing) {
-      return callback(new Error(`Must initialize ongoingGateway before asking for usage`))
-    }
-
-    this.ongoing.askForOngoingGatewayUsage(userId, callback)
+  ongoingGateway(gatewayName) {
+    const publicKey = crypto.getKeys().publicKey;
+    this.ongoing = new OngoingGateway(gatewayName, publicKey);
+    return this.ongoing
   }
 
-  signinWithApple(gatewayName, appleId, callback) {
-    if (callback === undefined) {
-      return new Promise((resolve, reject) => {
-        this.signinWithApple(gatewayName, appleId, (err, result) => {
-          err ? reject(err) : resolve(result);
-        });
-      });
-    }
-
+  async askForOngoingGatewayUsage() {
     if(!this.ongoing) {
-      return callback(new Error('Must initialize ongoingGateway before asking for usage'));
-    } 
-
-    this.ongoing.signinWithApple(gatewayName, appleId, callback);
+      throw new Error(`Must initialize ongoingGateway before asking for usage`);
+    }
+    try {
+      const res = await this.askForOngoingGatewayUsage();
+      return res;
+    } catch(err) {
+      throw err;
+    }
   }
 
-  usePowerAtOngoingGateway(opts, callback) {
-    if (callback === undefined) {
-      return new Promise((resolve, reject) => {
-        this.usePowerAtOngoingGateway(opts, (err, result) => {
-          err ? reject(err) : resolve(result)
-        })
-      })
+  async urlToLinkWithPlanetNineApp(returnURL) {
+    if(!this.ongoing) {
+      throw new Error(`Must initialize ongoingGateway before asking for usage`);
     }
+    const url = await this.ongoing.urlToLinkWithPlanetNineApp(returnURL);
+    return url;
+  }
 
+  async signinWithApple(gatewayName, appleId) {
+    if(!this.ongoing) { throw new Error('Must initialize ongoingGateway before signing in'); }
+    try { 
+      const user = await this.ongoing.signinWithApple(gatewayName, appleId);
+      return user;
+    } catch(err) {
+      throw err;
+    }
+  }
+
+  async signInWithGoogle(googleIdToken) {
+    if(!this.ongoing) { throw new Error('Must initialize ongoingGateway before signing in'); }
+    try { 
+      const user = await this.ongoing.signinWithGoogle(gatewayName, googleIdToken);
+      return user;
+    } catch(err) {
+      throw err;
+    }
+  }
+
+  async usePowerAtOngoingGateway(user, partnerName, totalPower) {
+    if(!this.ongoing) { throw new Error('Must initialize ongoingGateway before signing in'); }
+    try {
+      const user = await this.ongoing.usePowerAtOngoingGateway(user.userUUID, partnerName, totalPower, user.powerOrdinal + 1)
+      return user;
+    } catch(err) {
+      throw err;
+    }
+  }
+
+  async getUserIdByUsername(username) {
+    try {
+      const userUUID = await network.getUserUUIDByUsername(username);
+      return userUUID;
+    } catch(err) {
+      throw err;
+    }
+  }
+
+  async getUser(userUUID) {
     if (!this.ongoing) {
-      return callback(new Error(`Must initialize ongoingGateway before using power`))
+      throw new Error(`Must initialize ongoingGateway before getting user`);
     }
-
-    this.ongoing.usePowerAtOngoingGateway(opts, callback)
-  }
-
-  getUserIdByUsername(username, callback) {
-    if (callback === undefined) {
-      return new Promise((resolve, reject) => {
-        this.getUserIdByUsername(username, (err, result) => {
-          err ? reject(err) : resolve(result)
-        })
-      })
-    }
-
-    network.getUserIdByUsername(username, (err, user) => {
-      if (err) {
-        callback(err)
-      }
-      const userId = user.userId
-      callback(null, userId)
-    })
-  }
-
-  getUser(userId, callback) {
-    if (callback === undefined) {
-      return new Promise((resolve, reject) => {
-        this.getUser(userId, (err, result) => {
-          err ? reject(err) : resolve(result)
-        })
-      })
-    }
-
-    if (!this.ongoing) {
-      return callback(new Error(`Must initialize ongoingGateway before getting user`))
-    }
-
     const opts = {
       gatewayName: this.ongoing.gatewayName,
-      userId: userId,
+      userUUID: userUUID
     }
     PlanetNineUser.getUser(opts, callback)
   }
 
-  requestTransfer(opts, callback) {
-    if (callback === undefined) {
-      return new Promise((resolve, reject) => {
-        this.requestTransfer(opts, (err, result) => {
-          err ? reject(err) : resolve(result)
-        })
-      })
-    }
-
+  async requestTransfer(requestingUser, destinationUserUUID, nineumUniqueIds, price) {
     if (!this.ongoing) {
-      return console.log(`Must initialize ongoingGateway before requestingTransfer`)
+      throw new Error(`Must initialize ongoingGateway before requestingTransfer`);
     }
-
-    this.ongoing.requestTransfer(opts, callback)
+    try {
+      const nineumTransferRequest = await this.ongoing.requestTransfer(opts);
+      return nineumTransferRequest;
+    } catch(err) {
+      throw err;
+    }
   }
 
   registerToMintNineum(opts, callback) {

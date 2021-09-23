@@ -1,6 +1,6 @@
 {
   "name": "planet-nine-gateway-framework",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "Planet Nine gateway framework for Node.js apps",
   "main": "planet-nine-gateway.js",
   "scripts": {
@@ -17,8 +17,8 @@
   },
   "homepage": "https://github.com/planet-nine-app/node-planet-nine-gateway-framework#readme",
   "dependencies": {
-    "axios": "^0.19.2",
     "moment": "^2.24.0",
-    "planet-nine-crypto": "^1.0.1"
+    "planet-nine-crypto": "^1.0.1",
+    "superagent": "^6.1.0"
   }
 }
