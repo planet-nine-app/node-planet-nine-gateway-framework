@@ -19,6 +19,10 @@ module.exports = class PlanetNineGateway {
     return crypto.generateKeys(seed)
   }
 
+  static signMessage(message) {
+    return crypto.signMessage(message);
+  }
+
   ongoingGateway(gatewayName) {
     const publicKey = crypto.getKeys().publicKey;
     this.ongoing = new OngoingGateway(gatewayName, publicKey);
