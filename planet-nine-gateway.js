@@ -19,7 +19,7 @@ module.exports = class PlanetNineGateway {
     return crypto.generateKeys(seed)
   }
 
-  static signMessage(message) {
+  signMessage(message) {
     return crypto.signMessage(message);
   }
 
@@ -96,7 +96,8 @@ module.exports = class PlanetNineGateway {
       gatewayName: this.ongoing.gatewayName,
       userUUID: userUUID
     }
-    PlanetNineUser.getUser(opts, callback)
+    const user = await PlanetNineUser.getUser(opts)
+    return user;
   }
 
   async requestTransfer(requestingUser, destinationUserUUID, nineumUniqueIds, price) {
@@ -141,6 +142,16 @@ module.exports = class PlanetNineGateway {
     }
 
     this.ongoing.mintNineum(opts, callback);
+  }
+
+  getNineumArrayForNineumHexStrings(hexStrings) {
+    const nineumArray = Nineum.getNineumArrayForNineumHexStrings(hexStrings)
+    return nineumArray
+  }
+  
+  getNineumFromHexString(hexString) {
+    const nineum = Nineum.getNineumFromHexString(hexString)
+    return nineum
   }
 
   static getNineumArrayForNineumHexStrings(hexStrings) {
