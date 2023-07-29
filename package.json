@@ -1,6 +1,6 @@
 {
   "name": "planet-nine-gateway-framework",
-  "version": "2.0.2",
+  "version": "3.0.0",
   "description": "Planet Nine gateway framework for Node.js apps",
   "main": "planet-nine-gateway.js",
   "scripts": {
@@ -20,5 +20,8 @@
     "moment": "^2.24.0",
     "planet-nine-crypto": "^1.0.1",
     "superagent": "^6.1.0"
+  },
+  "devDependencies": {
+    "browserify": "^17.0.0"
   }
 }
