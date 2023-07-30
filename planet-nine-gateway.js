@@ -53,11 +53,7 @@ class PlanetNineGateway {
     if (!this.gatewayAccessToken) {
       throw new Error(`Must initialize gatewayAccessToken before getting user`);
     }
-    const opts = {
-      gatewayAccessToken: gatewayAccessToken,
-      userUUID: userUUID
-    }
-    const user = await PlanetNineUser.getUser(opts)
+    const user = await PlanetNineUser.getUser(userUUID, this.gatewayAccessToken)
     return user;
   }
 

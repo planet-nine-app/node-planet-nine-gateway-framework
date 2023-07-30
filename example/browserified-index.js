@@ -13,7 +13,7 @@ PlanetNine.getKeys = () => {
 };
 
 onOneTimeClick = () => {
-  let askURL = PlanetNine.urlForOneTimePowerUsage(400, 'lazer', 'http://192.168.0.30:8000', 'Testing', 'Testing one time gateways');
+  let askURL = PlanetNine.urlForOneTimePowerUsage(400, 'lazer', window.location.href, 'Testing', 'Testing one time gateways');
   window.location.href = askURL;
 };
 
@@ -32,12 +32,13 @@ if(window.location.href.indexOf('signature') !== -1) {
 }
 
 onOngoingClick = () => {
-  let askURL = PlanetNine.urlToLinkWithPlanetNineApp('http://192.168.0.30:8000');
-  indow.location.href = askURL;
+  let askURL = PlanetNine.urlToLinkWithPlanetNineApp(window.location.href);
+  window.location.href = askURL;
 };
 
 // Handle ongoing gateway success
-if(window.location.href.indexOf('userUUID') !== -1) {
+if(window.location.href.indexOf('success') !== -1) {
+  let returnedURL = window.location.href;
   let queryString = returnedURL.split('?')[1];
   if(!queryString) {
     return {};
@@ -48,16 +49,20 @@ if(window.location.href.indexOf('userUUID') !== -1) {
     let splits = param.split('=');
     paramsObject[splits[0]] = splits[1];
   });
+  if(!paramsObject.success) {
+     // Handle failure here
+     return;
+  }
   localStorage.setItem('userUUID', paramsObject.userUUID);
   
   // Now you can get user
   (async () => {
     let user = await PlanetNine.getUser(paramsObject.userUUID);
+    localStorage.setItem('user', JSON.stringify(user));
     alert('User has ' + user.nineum.length + ' nineum!');
   })();  
  
-  localStorage.setItem('user', JSON.stringify(user));
-  div.getElementById('ongoingPowerButton').hidden = false;
+  document.getElementById('ongoingPowerButton').hidden = false;
 }
 
 onUsePowerAtOngoingGateway = async () => {
@@ -436,14 +441,14 @@ const PlanetNineUser = require('./planet-nine-user.js')
 
 module.exports = class OngoingGateway {
   
-  static async urlToLinkWithPlanetNineApp(returnURL, gatewayAccessToken) {
+  static urlToLinkWithPlanetNineApp(returnURL, gatewayAccessToken) {
     let gatewayKey = { 
-      gatewayAccessToken: this.gatewayAccessToken, 
+      gatewayAccessToken: gatewayAccessToken, 
       publicKey: crypto.getKeys().publicKey, 
       timestamp: moment().valueOf().toString()
     };
     gatewayKey.signature = crypto.signMessage(JSON.stringify(gatewayKey));
-    const url = `planetnine://ongoing?gatewayAccessToken=${encodeURIComponent(gatewayAccessToken)}&publickey=${gatewayKey.publicKey}&gatewayurl=${returnURL}&timestamp=${gatewayKey.timestamp}`;
+    const url = `https://www.plnet9.com/ongoing?gatewayAccessToken=${encodeURIComponent(gatewayAccessToken)}&publickey=${gatewayKey.publicKey}&gatewayurl=${returnURL}&gatewaySignature=${gatewayKey.signature}&timestamp=${gatewayKey.timestamp}`;
     return url;
   }
 
@@ -474,15 +479,15 @@ const moment = require('moment')
 
 
 module.exports = class PlanetNineUser {
-  static async getUser(opts) {
+  static async getUser(userUUID, gatewayAccessToken) {
     const timestamp = moment().valueOf().toString()
     const authObj = {
-      gatewayAccessToken: opts.gatewayAccessToken,
+      gatewayAccessToken: gatewayAccessToken,
       timestamp: timestamp
     }
     const signature = crypto.signMessage(JSON.stringify(authObj));
     try {
-      const user = await network.getUserByUserUUID({userUUID: opts.userUUID, gatewayName: opts.gatewayName, signature: signature, timestamp: timestamp});
+      const user = await network.getUserByUserUUID(userUUID, gatewayAccessToken, signature, timestamp);
       return this.filterUserResp(user);
     } catch(err) {
       throw err;
@@ -530,8 +535,8 @@ async function get(path) {
 }
 
 module.exports = {
-  getUserByUserUUID: async function (opts) {
-    const path = `/gateway/${opts.gatewayName}/userUUID/${opts.userUUID}/signature/${opts.signature}/timestamp/${opts.timestamp}`
+  getUserByUserUUID: async function (userUUID, gatewayAccessToken, signature, timestamp) {
+    const path = `/gateway/gatewayAccessToken/${gatewayAccessToken}/userUUID/${userUUID}/signature/${signature}/timestamp/${timestamp}`
     try {
       const res = await get(path)
       return res;
@@ -28155,11 +28160,7 @@ class PlanetNineGateway {
     if (!this.gatewayAccessToken) {
       throw new Error(`Must initialize gatewayAccessToken before getting user`);
     }
-    const opts = {
-      gatewayAccessToken: gatewayAccessToken,
-      userUUID: userUUID
-    }
-    const user = await PlanetNineUser.getUser(opts)
+    const user = await PlanetNineUser.getUser(userUUID, this.gatewayAccessToken)
     return user;
   }
 

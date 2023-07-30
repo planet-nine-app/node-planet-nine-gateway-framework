@@ -12,7 +12,7 @@ PlanetNine.getKeys = () => {
 };
 
 onOneTimeClick = () => {
-  let askURL = PlanetNine.urlForOneTimePowerUsage(400, 'lazer', 'http://192.168.0.30:8000', 'Testing', 'Testing one time gateways');
+  let askURL = PlanetNine.urlForOneTimePowerUsage(400, 'lazer', window.location.href, 'Testing', 'Testing one time gateways');
   window.location.href = askURL;
 };
 
@@ -31,12 +31,13 @@ if(window.location.href.indexOf('signature') !== -1) {
 }
 
 onOngoingClick = () => {
-  let askURL = PlanetNine.urlToLinkWithPlanetNineApp('http://192.168.0.30:8000');
-  indow.location.href = askURL;
+  let askURL = PlanetNine.urlToLinkWithPlanetNineApp(window.location.href);
+  window.location.href = askURL;
 };
 
 // Handle ongoing gateway success
 if(window.location.href.indexOf('success') !== -1) {
+  let returnedURL = window.location.href;
   let queryString = returnedURL.split('?')[1];
   if(!queryString) {
     return {};
@@ -56,11 +57,11 @@ if(window.location.href.indexOf('success') !== -1) {
   // Now you can get user
   (async () => {
     let user = await PlanetNine.getUser(paramsObject.userUUID);
+    localStorage.setItem('user', JSON.stringify(user));
     alert('User has ' + user.nineum.length + ' nineum!');
   })();  
  
-  localStorage.setItem('user', JSON.stringify(user));
-  div.getElementById('ongoingPowerButton').hidden = false;
+  document.getElementById('ongoingPowerButton').hidden = false;
 }
 
 onUsePowerAtOngoingGateway = async () => {
