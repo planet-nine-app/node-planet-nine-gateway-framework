@@ -71,7 +71,7 @@ if(window.location.href.indexOf('success') !== -1) {
 
 onUsePowerAtOngoingGateway = async () => {
   try {
-    let user = localStorage.getItem('user');
+    let user = JSON.parse(localStorage.getItem('user'));
     let updatedUser = await PlanetNine.usePowerAtOngoingGateway(user, 'lazer', 400);
     localStorage.setItem('user', JSON.stringify(updatedUser));
     alert('User now has ' + updatedUser.nineum.length + ' nineum');
