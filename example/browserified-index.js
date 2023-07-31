@@ -21,7 +21,7 @@ onOneTimeClick = () => {
 if(window.location.href.indexOf('signature') !== -1) {
   (async () => {
     try {
-      let res = await PlanetNine.submitPowerUsage(window.location.href);
+      let res = await PlanetNine.submitPowerUsage(window.location.href, 400, 'lazer');
       alert(res);
       console.log(res);
     } catch(err) {
@@ -57,18 +57,27 @@ if(window.location.href.indexOf('success') !== -1) {
   
   // Now you can get user
   (async () => {
-    let user = await PlanetNine.getUser(paramsObject.userUUID);
-    localStorage.setItem('user', JSON.stringify(user));
-    alert('User has ' + user.nineum.length + ' nineum!');
+    try {
+      let user = await PlanetNine.getUser(paramsObject.userUUID);
+      localStorage.setItem('user', JSON.stringify(user));
+      alert('User has ' + user.nineum.length + ' nineum!');
+    } catch(err) {
+      alert(err);
+    }
   })();  
  
   document.getElementById('ongoingPowerButton').hidden = false;
 }
 
 onUsePowerAtOngoingGateway = async () => {
-  let user = localStorage.getItem('user');
-  let updatedUser = await PlanetNine.usePowerAtOngoingGateway(user, 'lazer', 400);
-  alert('User now has ' + updatedUser.nineum.length + ' nineum');
+  try {
+    let user = localStorage.getItem('user');
+    let updatedUser = await PlanetNine.usePowerAtOngoingGateway(user, 'lazer', 400);
+    localStorage.setItem('user', JSON.stringify(updatedUser));
+    alert('User now has ' + updatedUser.nineum.length + ' nineum');
+  } catch(err) {
+    alert(err);
+  }
 };
 
 },{"./planet-nine-gateway":118}],2:[function(require,module,exports){
@@ -408,7 +417,7 @@ module.exports = class OneTimeGateway {
     return urlString;
   }
 
-  static async submitPowerUsage(returnedURL) {
+  static async submitPowerUsage(returnedURL, totalPower, partnerName, gatewayAccessToken) {
     let queryString = returnedURL.split('?')[1];
     if(!queryString) {
       return {};
@@ -420,10 +429,11 @@ module.exports = class OneTimeGateway {
       paramsObject[splits[0]] = splits[1];
     });
     let powerUsage = {
-      totalPower: this.totalPower,
-      partnerName: this.partnerName,
-      gatewayAccessToken: this.gatewayAccessToken,
+      totalPower: totalPower,
+      partnerName: partnerName,
+      gatewayAccessToken: gatewayAccessToken,
       userUUID: paramsObject.userUUID,
+      ordinal: +paramsObject.ordinal,
       signature: paramsObject.signature,
       partnerDisplayName: this.partnerDisplayName,
       description: this.description,
@@ -28132,9 +28142,9 @@ class PlanetNineGateway {
     return url;
   }
 
-  async submitPowerUsage(returnedURL, callback) {
+  async submitPowerUsage(returnedURL, totalPower, partnerName) {
     if(!this.gatewayAccessToken) { throw new Error('Must initialize gatewayAccessToken before asking for usage'); }
-    let res = await OneTimeGateway.submitPowerUsage(returnedURL, callback);
+    let res = await OneTimeGateway.submitPowerUsage(returnedURL, totalPower, partnerName, this.gatewayAccessToken);
     return res;
   }
 
