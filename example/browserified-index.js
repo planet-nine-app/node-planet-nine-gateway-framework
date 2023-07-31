@@ -497,7 +497,7 @@ module.exports = class PlanetNineUser {
 
   static filterUserResp(userResp) {
     var user = {
-      userId: userResp.userId || 0,
+      userUUID: userResp.userUUID || "",
       name: userResp.name || "",
       powerOrdinal: userResp.powerOrdinal || 0,
       currentPower: userResp.currentPower,
@@ -28149,8 +28149,8 @@ class PlanetNineGateway {
   async usePowerAtOngoingGateway(user, partnerName, totalPower) {
     if(!this.gatewayAccessToken) { throw new Error('Must initialize gatewayAccessToken before signing in'); }
     try {
-      const user = await OngoingGateway.usePowerAtOngoingGateway(user.userUUID, partnerName, totalPower, user.powerOrdinal + 1, this.gatewayAccessToken)
-      return user;
+      const updatedUser = await OngoingGateway.usePowerAtOngoingGateway(user.userUUID, partnerName, totalPower, user.powerOrdinal + 1, this.gatewayAccessToken)
+      return updatedUser;
     } catch(err) {
       throw err;
     }

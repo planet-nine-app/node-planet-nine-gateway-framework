@@ -25,9 +25,9 @@ class PlanetNineGateway {
     return url;
   }
 
-  async submitPowerUsage(returnedURL, callback) {
+  async submitPowerUsage(returnedURL, totalPower, partnerName) {
     if(!this.gatewayAccessToken) { throw new Error('Must initialize gatewayAccessToken before asking for usage'); }
-    let res = await OneTimeGateway.submitPowerUsage(returnedURL, callback);
+    let res = await OneTimeGateway.submitPowerUsage(returnedURL, totalPower, partnerName, this.gatewayAccessToken);
     return res;
   }
 
@@ -42,8 +42,8 @@ class PlanetNineGateway {
   async usePowerAtOngoingGateway(user, partnerName, totalPower) {
     if(!this.gatewayAccessToken) { throw new Error('Must initialize gatewayAccessToken before signing in'); }
     try {
-      const user = await OngoingGateway.usePowerAtOngoingGateway(user.userUUID, partnerName, totalPower, user.powerOrdinal + 1, this.gatewayAccessToken)
-      return user;
+      const updatedUser = await OngoingGateway.usePowerAtOngoingGateway(user.userUUID, partnerName, totalPower, user.powerOrdinal + 1, this.gatewayAccessToken)
+      return updatedUser;
     } catch(err) {
       throw err;
     }

@@ -20,7 +20,7 @@ onOneTimeClick = () => {
 if(window.location.href.indexOf('signature') !== -1) {
   (async () => {
     try {
-      let res = await PlanetNine.submitPowerUsage(window.location.href);
+      let res = await PlanetNine.submitPowerUsage(window.location.href, 400, 'lazer');
       alert(res);
       console.log(res);
     } catch(err) {
@@ -56,16 +56,25 @@ if(window.location.href.indexOf('success') !== -1) {
   
   // Now you can get user
   (async () => {
-    let user = await PlanetNine.getUser(paramsObject.userUUID);
-    localStorage.setItem('user', JSON.stringify(user));
-    alert('User has ' + user.nineum.length + ' nineum!');
+    try {
+      let user = await PlanetNine.getUser(paramsObject.userUUID);
+      localStorage.setItem('user', JSON.stringify(user));
+      alert('User has ' + user.nineum.length + ' nineum!');
+    } catch(err) {
+      alert(err);
+    }
   })();  
  
   document.getElementById('ongoingPowerButton').hidden = false;
 }
 
 onUsePowerAtOngoingGateway = async () => {
-  let user = localStorage.getItem('user');
-  let updatedUser = await PlanetNine.usePowerAtOngoingGateway(user, 'lazer', 400);
-  alert('User now has ' + updatedUser.nineum.length + ' nineum');
+  try {
+    let user = localStorage.getItem('user');
+    let updatedUser = await PlanetNine.usePowerAtOngoingGateway(user, 'lazer', 400);
+    localStorage.setItem('user', JSON.stringify(updatedUser));
+    alert('User now has ' + updatedUser.nineum.length + ' nineum');
+  } catch(err) {
+    alert(err);
+  }
 };
