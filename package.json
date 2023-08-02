@@ -1,5 +1,5 @@
 {
-  "name": "planet-nine-gateway-framework",
+  "name": "planet-nine-gateway",
   "version": "3.0.0",
   "description": "Planet Nine gateway framework for Node.js apps",
   "main": "planet-nine-gateway.js",
