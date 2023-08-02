@@ -20,7 +20,7 @@ A node framework for embedding gateways in your apps and webpages, and interacti
 Install with [npm](http://npmjs.com) by running the following in the root directory of your node project:
 
 ```
-npm i planet-nine-gateway-framework
+npm i planet-nine-gateway
 ```
 
 
