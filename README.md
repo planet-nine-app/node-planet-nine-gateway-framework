@@ -23,7 +23,7 @@ Install with [npm](http://npmjs.com) by running the following in the root direct
 npm i planet-nine-gateway
 ```
 
-
+You'll also need a Gateway Access Token. You can get one in the Planet Nine app. Navigate to the account screen (top right astronaut icon on the main screen), and tap the astronaut image four times. You'll be prompted for a gateway name, and then the app will present you with your access token. NOTE this is the only time you'll see your access token. If you lose it, you'll need to create another gateway.
 
 
 ### Keys
